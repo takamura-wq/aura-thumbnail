@@ -192,9 +192,14 @@
                         <input type="range" id="sticker-scale-slider" min="0.2" max="4" step="0.1" value="1" class="w-full" oninput="updateStickerScale()">
                         <button onclick="changeStickerScale(0.1)" class="w-10 h-10 shrink-0 bg-amber-200 text-amber-800 font-bold rounded-full hover:bg-amber-300 transition-colors shadow-sm text-xl flex items-center justify-center select-none">+</button>
                     </div>
-                    <button onclick="deleteSelectedSticker()" class="w-full py-2 bg-red-500 text-white font-bold rounded-lg text-sm hover:bg-red-600 transition-colors shadow-sm">
-                        Hapus Sticker Ini
-                    </button>
+                    <div class="flex gap-2">
+                        <button onclick="duplicateSelectedSticker()" class="w-1/2 py-2 bg-indigo-500 text-white font-bold rounded-lg text-sm hover:bg-indigo-600 transition-colors shadow-sm">
+                            Duplikat
+                        </button>
+                        <button onclick="deleteSelectedSticker()" class="w-1/2 py-2 bg-red-500 text-white font-bold rounded-lg text-sm hover:bg-red-600 transition-colors shadow-sm">
+                            Hapus
+                        </button>
+                    </div>
                 </div>
 
                 <button onclick="clearStickers()" class="w-full mt-2 py-2 bg-red-100 text-red-600 font-bold rounded-lg text-sm hover:bg-red-200 transition-colors">
@@ -462,6 +467,32 @@
             if (selectedSticker) {
                 stickers = stickers.filter(s => s !== selectedSticker);
                 setSelectedSticker(null);
+                drawCanvas();
+            }
+        }
+
+        function duplicateSelectedSticker() {
+            if (selectedSticker) {
+                // Buat salinan dari sticker yang dipilih
+                const newSticker = {
+                    type: selectedSticker.type,
+                    x: selectedSticker.x + 40, // Geser 40px ke kanan-bawah agar terlihat salinannya
+                    y: selectedSticker.y + 40,
+                    width: selectedSticker.width,
+                    height: selectedSticker.height,
+                    scale: selectedSticker.scale
+                };
+
+                if (selectedSticker.type === 'text') {
+                    newSticker.content = selectedSticker.content;
+                    newSticker.fontSize = selectedSticker.fontSize;
+                } else if (selectedSticker.type === 'image') {
+                    // Pakai ulang objek gambar yang sudah diload dari memori, tidak perlu upload lagi
+                    newSticker.img = selectedSticker.img; 
+                }
+
+                stickers.push(newSticker);
+                setSelectedSticker(newSticker); // Otomatis pilih stiker yang baru diduplikat
                 drawCanvas();
             }
         }
