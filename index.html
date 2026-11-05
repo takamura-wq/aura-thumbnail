@@ -198,12 +198,12 @@
         const presets = {
             '16:9': {
                 width: 1280, height: 720,
-                textX: 80, textY: 80, textSize: 55, imgX: 180, imgY: 220, imgScale: 100,
+                textX: 430, textY: 80, textSize: 55, imgX: 180, imgY: 220, imgScale: 100,
                 textMaxWidth: 700 // Batas aman teks agar tidak nabrak karakter kanan
             },
             '1:1': {
                 width: 1080, height: 1080,
-                textX: 60, textY: 100, textSize: 65, imgX: 140, imgY: 280, imgScale: 100,
+                textX: 335, textY: 100, textSize: 65, imgX: 140, imgY: 280, imgScale: 100,
                 textMaxWidth: 550 // Batas aman teks untuk mode kotak
             }
         };
@@ -377,11 +377,11 @@
             const textX = parseInt(textXInput.value);
             const textY = parseInt(textYInput.value);
             
-            // Batasi lebar maksimal teks agar otomatis turun ke bawah (wrap)
-            const maxWidth = Math.min(preset.textMaxWidth, canvas.width - textX - 50); 
+            // Menggunakan batas aman bawaan (karena sekarang dihitung dari tengah)
+            const maxWidth = preset.textMaxWidth;
             
             ctx.font = `900 ${fontSize}px 'Fredoka', sans-serif`;
-            ctx.textAlign = 'left';
+            ctx.textAlign = 'center'; // Diubah menjadi rata tengah (Center Align)
             ctx.textBaseline = 'top';
 
             // Styling - Thick dark purple stroke with white fill (typical Youtube aesthetic)
