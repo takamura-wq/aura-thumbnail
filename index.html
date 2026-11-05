@@ -144,7 +144,7 @@
                 </div>
                 
                 <p class="mt-4 text-sm text-gray-500 text-center">
-                    <span class="font-bold text-amber-600">Info:</span> Pastikan file <code class="bg-gray-200 px-1 rounded">potrait.jpeg</code> & <code class="bg-gray-200 px-1 rounded">landscape.jpeg</code> berada di folder yang sama dengan file HTML ini.
+                    <span class="font-bold text-amber-600">Info:</span> Background diambil secara otomatis dari GitHub Repository.
                 </p>
             </div>
         </div>
@@ -172,18 +172,20 @@
 
         // Base Backgrounds
         const bg16x9 = new Image();
-        bg16x9.src = 'watermarked_img_2975980890833117561.jpg'; // Menggunakan nama persis
+        bg16x9.crossOrigin = 'anonymous'; // Penting agar gambar dari link luar bisa di-download via canvas
+        bg16x9.src = 'https://raw.githubusercontent.com/takamura-wq/aura-thumbnail/main/images/landscape.jpeg';
         bg16x9.onerror = function() {
             // Fallback if local image not found
-            bg16x9.src = 'https://placehold.co/1280x720/e9d5ff/7e22ce?text=Background+16:9+Tidak+Ditemukan.+Pastikan+nama+file+benar.';
+            bg16x9.src = 'https://placehold.co/1280x720/e9d5ff/7e22ce?text=Background+16:9+Tidak+Ditemukan.';
         };
         bg16x9.onload = drawCanvas;
 
         const bg1x1 = new Image();
-        bg1x1.src = '1000036271_b796de.jpg'; // Menggunakan nama persis
+        bg1x1.crossOrigin = 'anonymous'; // Penting agar gambar dari link luar bisa di-download via canvas
+        bg1x1.src = 'https://raw.githubusercontent.com/takamura-wq/aura-thumbnail/main/images/potrait.jpeg';
         bg1x1.onerror = function() {
             // Fallback if local image not found
-            bg1x1.src = 'https://placehold.co/1080x1080/e9d5ff/7e22ce?text=Background+1:1+Tidak+Ditemukan.+Pastikan+nama+file+benar.';
+            bg1x1.src = 'https://placehold.co/1080x1080/e9d5ff/7e22ce?text=Background+1:1+Tidak+Ditemukan.';
         };
         bg1x1.onload = drawCanvas;
 
