@@ -91,14 +91,18 @@
                     <textarea id="title-text" rows="2" class="w-full px-4 py-2 rounded-lg border-2 border-purple-200 focus:border-purple-500 focus:ring-0 outline-none resize-none font-semibold text-gray-700" placeholder="Ketik judul konten di sini..." oninput="drawCanvas()">S3PA PV D1 K45...</textarea>
                 </div>
                 
-                <div class="flex gap-4">
-                    <div class="flex-1">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2">
                         <label class="block text-xs font-bold text-purple-700 mb-1">Ukuran Teks</label>
                         <input type="range" id="text-size" min="30" max="150" value="80" class="w-full" oninput="drawCanvas()">
                     </div>
-                    <div class="flex-1">
+                    <div>
+                        <label class="block text-xs font-bold text-purple-700 mb-1">Posisi Teks (X)</label>
+                        <input type="range" id="text-x" min="0" max="1500" value="80" class="w-full" oninput="drawCanvas()">
+                    </div>
+                    <div>
                         <label class="block text-xs font-bold text-purple-700 mb-1">Posisi Teks (Y)</label>
-                        <input type="range" id="text-y" min="50" max="1000" value="180" class="w-full" oninput="drawCanvas()">
+                        <input type="range" id="text-y" min="0" max="1000" value="80" class="w-full" oninput="drawCanvas()">
                     </div>
                 </div>
             </div>
@@ -159,6 +163,7 @@
         // Element References
         const titleInput = document.getElementById('title-text');
         const textSizeInput = document.getElementById('text-size');
+        const textXInput = document.getElementById('text-x');
         const textYInput = document.getElementById('text-y');
         
         const imgScaleInput = document.getElementById('img-scale');
@@ -193,12 +198,12 @@
         const presets = {
             '16:9': {
                 width: 1280, height: 720,
-                textY: 80, textSize: 55, imgX: 140, imgY: 220, imgScale: 100,
+                textX: 80, textY: 80, textSize: 55, imgX: 180, imgY: 220, imgScale: 100,
                 textMaxWidth: 700 // Batas aman teks agar tidak nabrak karakter kanan
             },
             '1:1': {
                 width: 1080, height: 1080,
-                textY: 100, textSize: 65, imgX: 140, imgY: 280, imgScale: 100,
+                textX: 60, textY: 100, textSize: 65, imgX: 140, imgY: 280, imgScale: 100,
                 textMaxWidth: 550 // Batas aman teks untuk mode kotak
             }
         };
@@ -213,10 +218,9 @@
             
             // Calculate scale needed to fit inside bounds
             const baseScale = Math.min(maxW / uploadedPhoto.width, maxH / uploadedPhoto.height);
-            const targetW = uploadedPhoto.width * baseScale;
             
-            // Auto center horizontally
-            imgXInput.value = (preset.width - targetW) / 2;
+            // Set image X to the preset default (left-aligned, not dead center)
+            imgXInput.value = preset.imgX;
             
             // Auto position vertically below the text
             const estimatedTextHeight = parseInt(textSizeInput.value) * 2.5; // Estimate space for 2-3 lines of text
@@ -240,6 +244,7 @@
             
             // Set input defaults based on preset
             const preset = presets[currentRatio];
+            textXInput.value = preset.textX;
             textYInput.value = preset.textY;
             textSizeInput.value = preset.textSize;
             imgXInput.value = preset.imgX;
@@ -248,6 +253,7 @@
             resolutionBadge.innerText = `${preset.width} x ${preset.height}`;
 
             // Update range inputs max values dynamically based on canvas size
+            textXInput.max = preset.width;
             textYInput.max = preset.height;
             imgXInput.max = preset.width;
             imgYInput.max = preset.height;
@@ -368,8 +374,8 @@
             // 3. Draw Text
             const text = titleInput.value.toUpperCase();
             const fontSize = parseInt(textSizeInput.value);
+            const textX = parseInt(textXInput.value);
             const textY = parseInt(textYInput.value);
-            const textX = parseInt(imgXInput.value); // Align text with the image's X position by default
             
             // Batasi lebar maksimal teks agar otomatis turun ke bawah (wrap)
             const maxWidth = Math.min(preset.textMaxWidth, canvas.width - textX - 50); 
