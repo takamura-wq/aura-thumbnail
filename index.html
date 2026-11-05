@@ -43,6 +43,10 @@
         #preview-canvas {
             touch-action: none; /* Mencegah scroll saat menggeser stiker di HP */
             cursor: grab;
+            -webkit-touch-callout: none; /* Mencegah menu pop-up (save image dll) saat ditahan di iOS/Android */
+            -webkit-user-select: none; /* Mencegah seleksi saat digeser */
+            user-select: none;
+            outline: none;
         }
         #preview-canvas:active {
             cursor: grabbing;
@@ -158,8 +162,12 @@
 
                 <!-- Kontrol Stiker Terpilih (MUNCUL SAAT DIKLIK) -->
                 <div id="selected-sticker-controls" class="hidden mt-3 p-3 bg-white/60 rounded-xl border border-amber-200">
-                    <label class="block text-xs font-bold text-amber-800 mb-1">Sticker Terpilih: Atur Ukuran</label>
-                    <input type="range" id="sticker-scale-slider" min="0.2" max="4" step="0.1" value="1" class="w-full mb-3" oninput="updateStickerScale()">
+                    <label class="block text-xs font-bold text-amber-800 mb-2">Sticker Terpilih: Atur Ukuran</label>
+                    <div class="flex items-center gap-3 mb-3">
+                        <button onclick="changeStickerScale(-0.1)" class="w-10 h-10 shrink-0 bg-amber-200 text-amber-800 font-bold rounded-full hover:bg-amber-300 transition-colors shadow-sm text-xl flex items-center justify-center select-none">-</button>
+                        <input type="range" id="sticker-scale-slider" min="0.2" max="4" step="0.1" value="1" class="w-full" oninput="updateStickerScale()">
+                        <button onclick="changeStickerScale(0.1)" class="w-10 h-10 shrink-0 bg-amber-200 text-amber-800 font-bold rounded-full hover:bg-amber-300 transition-colors shadow-sm text-xl flex items-center justify-center select-none">+</button>
+                    </div>
                     <button onclick="deleteSelectedSticker()" class="w-full py-2 bg-red-500 text-white font-bold rounded-lg text-sm hover:bg-red-600 transition-colors shadow-sm">
                         Hapus Sticker Ini
                     </button>
@@ -397,6 +405,16 @@
             }
         }
 
+        function changeStickerScale(amount) {
+            if (selectedSticker) {
+                let currentVal = parseFloat(stickerScaleSlider.value);
+                let newVal = Math.max(0.2, Math.min(4, currentVal + amount)); // Batas min 0.2, max 4
+                stickerScaleSlider.value = newVal;
+                selectedSticker.scale = newVal;
+                drawCanvas();
+            }
+        }
+
         function deleteSelectedSticker() {
             if (selectedSticker) {
                 stickers = stickers.filter(s => s !== selectedSticker);
@@ -483,6 +501,9 @@
         canvas.addEventListener('touchstart', handlePointerDown, { passive: false });
         window.addEventListener('touchmove', handlePointerMove, { passive: false });
         window.addEventListener('touchend', handlePointerUp);
+        
+        // Mencegah menu klik kanan atau pop-up 'Save Image' bawaan browser di HP
+        canvas.addEventListener('contextmenu', e => e.preventDefault());
         
         // --- AKHIR FUNGSI STICKER ---
 
