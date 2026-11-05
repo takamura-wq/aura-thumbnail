@@ -193,11 +193,13 @@
         const presets = {
             '16:9': {
                 width: 1280, height: 720,
-                textY: 80, textSize: 55, imgX: 140, imgY: 220, imgScale: 100
+                textY: 80, textSize: 55, imgX: 140, imgY: 220, imgScale: 100,
+                textMaxWidth: 700 // Batas aman teks agar tidak nabrak karakter kanan
             },
             '1:1': {
                 width: 1080, height: 1080,
-                textY: 100, textSize: 65, imgX: 140, imgY: 280, imgScale: 100
+                textY: 100, textSize: 65, imgX: 140, imgY: 280, imgScale: 100,
+                textMaxWidth: 550 // Batas aman teks untuk mode kotak
             }
         };
 
@@ -368,7 +370,9 @@
             const fontSize = parseInt(textSizeInput.value);
             const textY = parseInt(textYInput.value);
             const textX = parseInt(imgXInput.value); // Align text with the image's X position by default
-            const maxWidth = canvas.width - textX - 50; // Prevent text from going off screen
+            
+            // Batasi lebar maksimal teks agar otomatis turun ke bawah (wrap)
+            const maxWidth = Math.min(preset.textMaxWidth, canvas.width - textX - 50); 
             
             ctx.font = `900 ${fontSize}px 'Fredoka', sans-serif`;
             ctx.textAlign = 'left';
