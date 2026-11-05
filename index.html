@@ -111,15 +111,27 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="col-span-2">
                         <label class="block text-xs font-bold text-purple-700 mb-1">Ukuran Teks</label>
-                        <input type="range" id="text-size" min="30" max="150" value="80" class="w-full" oninput="drawCanvas()">
+                        <div class="flex items-center gap-2">
+                            <button onclick="adjustSlider('text-size', -2)" class="w-8 h-8 shrink-0 bg-purple-200 text-purple-800 font-bold rounded-full hover:bg-purple-300 transition-colors flex items-center justify-center select-none">-</button>
+                            <input type="range" id="text-size" min="30" max="150" value="80" class="w-full" oninput="drawCanvas()">
+                            <button onclick="adjustSlider('text-size', 2)" class="w-8 h-8 shrink-0 bg-purple-200 text-purple-800 font-bold rounded-full hover:bg-purple-300 transition-colors flex items-center justify-center select-none">+</button>
+                        </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-purple-700 mb-1">Posisi Teks (X)</label>
-                        <input type="range" id="text-x" min="0" max="1500" value="80" class="w-full" oninput="drawCanvas()">
+                        <label class="block text-xs font-bold text-purple-700 mb-1">Posisi (X)</label>
+                        <div class="flex items-center gap-1 md:gap-2">
+                            <button onclick="adjustSlider('text-x', -5)" class="w-7 h-7 shrink-0 bg-purple-200 text-purple-800 font-bold rounded-full hover:bg-purple-300 transition-colors flex items-center justify-center select-none text-sm">-</button>
+                            <input type="range" id="text-x" min="0" max="1500" value="80" class="w-full" oninput="drawCanvas()">
+                            <button onclick="adjustSlider('text-x', 5)" class="w-7 h-7 shrink-0 bg-purple-200 text-purple-800 font-bold rounded-full hover:bg-purple-300 transition-colors flex items-center justify-center select-none text-sm">+</button>
+                        </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-purple-700 mb-1">Posisi Teks (Y)</label>
-                        <input type="range" id="text-y" min="0" max="1000" value="80" class="w-full" oninput="drawCanvas()">
+                        <label class="block text-xs font-bold text-purple-700 mb-1">Posisi (Y)</label>
+                        <div class="flex items-center gap-1 md:gap-2">
+                            <button onclick="adjustSlider('text-y', -5)" class="w-7 h-7 shrink-0 bg-purple-200 text-purple-800 font-bold rounded-full hover:bg-purple-300 transition-colors flex items-center justify-center select-none text-sm">-</button>
+                            <input type="range" id="text-y" min="0" max="1000" value="80" class="w-full" oninput="drawCanvas()">
+                            <button onclick="adjustSlider('text-y', 5)" class="w-7 h-7 shrink-0 bg-purple-200 text-purple-800 font-bold rounded-full hover:bg-purple-300 transition-colors flex items-center justify-center select-none text-sm">+</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -129,16 +141,28 @@
                 <label class="block text-sm font-bold text-pink-700">Sesuaikan Posisi Foto</label>
                 <div>
                     <label class="block text-xs font-bold text-pink-700 mb-1">Ukuran (Scale)</label>
-                    <input type="range" id="img-scale" min="10" max="200" value="100" class="w-full" oninput="drawCanvas()">
+                    <div class="flex items-center gap-2">
+                        <button onclick="adjustSlider('img-scale', -2)" class="w-8 h-8 shrink-0 bg-pink-200 text-pink-800 font-bold rounded-full hover:bg-pink-300 transition-colors flex items-center justify-center select-none">-</button>
+                        <input type="range" id="img-scale" min="10" max="200" value="100" class="w-full" oninput="drawCanvas()">
+                        <button onclick="adjustSlider('img-scale', 2)" class="w-8 h-8 shrink-0 bg-pink-200 text-pink-800 font-bold rounded-full hover:bg-pink-300 transition-colors flex items-center justify-center select-none">+</button>
+                    </div>
                 </div>
                 <div class="flex gap-4">
                     <div class="flex-1">
-                        <label class="block text-xs font-bold text-pink-700 mb-1">Geser Kiri/Kanan</label>
-                        <input type="range" id="img-x" min="0" max="1500" value="100" class="w-full" oninput="drawCanvas()">
+                        <label class="block text-xs font-bold text-pink-700 mb-1">Kiri/Kanan</label>
+                        <div class="flex items-center gap-1 md:gap-2">
+                            <button onclick="adjustSlider('img-x', -5)" class="w-7 h-7 shrink-0 bg-pink-200 text-pink-800 font-bold rounded-full hover:bg-pink-300 transition-colors flex items-center justify-center select-none text-sm">-</button>
+                            <input type="range" id="img-x" min="0" max="1500" value="100" class="w-full" oninput="drawCanvas()">
+                            <button onclick="adjustSlider('img-x', 5)" class="w-7 h-7 shrink-0 bg-pink-200 text-pink-800 font-bold rounded-full hover:bg-pink-300 transition-colors flex items-center justify-center select-none text-sm">+</button>
+                        </div>
                     </div>
                     <div class="flex-1">
-                        <label class="block text-xs font-bold text-pink-700 mb-1">Geser Atas/Bawah</label>
-                        <input type="range" id="img-y" min="0" max="1000" value="250" class="w-full" oninput="drawCanvas()">
+                        <label class="block text-xs font-bold text-pink-700 mb-1">Atas/Bawah</label>
+                        <div class="flex items-center gap-1 md:gap-2">
+                            <button onclick="adjustSlider('img-y', -5)" class="w-7 h-7 shrink-0 bg-pink-200 text-pink-800 font-bold rounded-full hover:bg-pink-300 transition-colors flex items-center justify-center select-none text-sm">-</button>
+                            <input type="range" id="img-y" min="0" max="1000" value="250" class="w-full" oninput="drawCanvas()">
+                            <button onclick="adjustSlider('img-y', 5)" class="w-7 h-7 shrink-0 bg-pink-200 text-pink-800 font-bold rounded-full hover:bg-pink-300 transition-colors flex items-center justify-center select-none text-sm">+</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -413,6 +437,25 @@
                 selectedSticker.scale = newVal;
                 drawCanvas();
             }
+        }
+
+        // Fungsi General untuk tombol +/- pada slider (Teks dan Foto)
+        function adjustSlider(id, amount) {
+            const slider = document.getElementById(id);
+            if (!slider) return;
+            
+            let currentVal = parseFloat(slider.value);
+            let max = parseFloat(slider.max);
+            let min = parseFloat(slider.min);
+            
+            let newVal = currentVal + amount;
+            
+            // Pastikan nilai tidak melewati batas minimum dan maksimum slider
+            if (newVal > max) newVal = max;
+            if (newVal < min) newVal = min;
+            
+            slider.value = newVal;
+            drawCanvas(); // Render ulang kanvas
         }
 
         function deleteSelectedSticker() {
